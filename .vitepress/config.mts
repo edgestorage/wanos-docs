@@ -6,6 +6,7 @@ export default withMermaid(defineConfig({
   lang: 'zh-CN',
   title: "WANOS",
   description: "分布式对象存储网关与编排系统",
+  srcExclude: ['README.md'],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

@@ -35,5 +35,5 @@ WANOS 更适合用在下面这类场景中：
    - 参考「[使用](/manual/usage)」章节，通过 S3 客户端或 SDK 实际读写对象，体验基本能力。
 
 4. **接入真实存储后端与策略**：
-   - 阅读「[存储后端](/reference/backends)」，按文档说明接入你的 S3、本地、WebDAV 或 OneDrive 等后端；
+   - 阅读「[存储后端](/reference/backends/)」，按文档说明接入你的 S3、本地、WebDAV 或 OneDrive 等后端；
    - 阅读「[副本与存储策略](/reference/storage-policy)」，根据业务的重要程度和成本要求配置合适的副本规则与数据策略。
