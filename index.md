@@ -1,7 +1,8 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-
+title: WANOS - 分布式对象存储网关
+titleTemplate: false
 hero:
   name: "WANOS"
   text: "分布式对象存储网关与编排系统"

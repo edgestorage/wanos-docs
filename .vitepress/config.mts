@@ -5,8 +5,21 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfig({
   lang: 'zh-CN',
   title: "WANOS",
-  description: "分布式对象存储网关与编排系统",
+  titleTemplate: ':title | WANOS - 分布式对象存储网关',
+  description: "分布式对象存储网关与编排系统，支持多后端统一管理、S3接口、数据冗余与无感迁移",
   srcExclude: ['README.md'],
+  sitemap: {
+    hostname: 'https://edgestorage.cc'
+  },
+  head: [
+    ['meta', { name: 'keywords', content: 'WANOS,分布式存储,对象存储,S3网关,存储编排,多云存储,WebDAV,OneDrive,NAS,数据迁移,存储冗余,私有云存储,开源对象存储,MinIO替代,存储聚合,统一存储,边缘存储,混合云存储,数据备份,存储策略' }],
+    ['meta', { name: 'author', content: 'WANOS Team' }],
+    ['meta', { property: 'og:title', content: 'WANOS - 分布式对象存储网关' }],
+    ['meta', { property: 'og:description', content: '开源分布式对象存储编排系统，整合S3、本地磁盘、WebDAV、OneDrive等多种后端，提供统一S3接口' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'WANOS - 分布式对象存储网关' }],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
