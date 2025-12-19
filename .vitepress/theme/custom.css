@@ -1,0 +1,24 @@
+/* 仅在默认样式基础上给文档表格增加圆角 */
+.vp-doc table {
+    border-radius: 8px;
+    border: 1px solid var(--vp-c-divider, #e5e7eb);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.vp-doc th,
+.vp-doc td {
+    border: 0;
+}
+
+.vp-doc thead th + th,
+.vp-doc tbody td + td {
+    border-left: 1px solid var(--vp-c-divider, #e5e7eb);
+}
+
+.vp-doc tbody tr:first-child td,
+.vp-doc tbody tr + tr td {
+    border-top: 1px solid var(--vp-c-divider, #e5e7eb);
+}
