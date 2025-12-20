@@ -1,33 +1,33 @@
- # 安装
- 
- 本文档介绍使用 Docker Compose 部署并启动 WANOS（后端与管理后台）。
- 
+# 手动安装
+
+本文档介绍使用 Docker Compose 手动部署 WANOS。如果您希望快速体验，请参考 [快速安装](./quick-start.md)。
+
 ## 环境要求
- 
+
 - Docker 20+（或最新版 Docker Desktop）
 - Docker Compose v2+
- 
-## 准备环境变量（可选但推荐）
+
+### 准备环境变量（可选但推荐）
 
 在项目根目录新建或编辑 `.env`，用于 Compose 变量替换；或使用 `.env.local` 并在命令中通过 `--env-file` 指定。
 
-### 变量说明
+#### 变量说明
 
-#### 管理员
+##### 管理员
 
 | 变量名 | 说明 |
 |--------|------|
 | `ADMIN_USER` | 首次启动用于创建默认管理员账号。若该用户已存在，则不会覆盖。 |
 | `ADMIN_PASS` | 默认管理员密码。建议仅用于初始化，首次登录后尽快在“设置/用户”中修改。 |
 
-#### 会话
+##### 会话
 
 | 变量名 | 说明 | 示例 |
 |--------|------|------|
 | `SESSION_SECRET` | 会话签名密钥。用于保护登录态，建议长度≥32、随机生成，切勿泄露。 | 随机高熵字符串 |
 | `SESSION_TTL_SECONDS` | 会话有效期（秒），例如 `43200` 表示 12 小时。到期需重新登录。 | `43200`（12 小时） |
 
-#### 单点登录（可选，如需启用 OIDC）
+##### 单点登录（可选，如需启用 OIDC）
 
 | 变量名 | 说明 | 示例 |
 |--------|------|------|
@@ -37,11 +37,26 @@
 | `OIDC_REDIRECT_URL` | 回调地址，需与身份提供商的应用配置一致。 |  |
 | `OIDC_SCOPES` | OIDC 授权范围，常见为 `openid profile email`，按实际需要配置。 | `openid profile email` |
 
-#### 加密
+##### 加密
 
 | 变量名 | 说明 | 要求 / 建议 |
 |--------|------|-------------|
 | `AKSK_SECRET_KEY` | 用于敏感配置加/解密的 AES-256 密钥。 | 要求：32 字节原始值，或其 Base64 编码（32 字节经标准 Base64 编码长度通常为 44 字符）。建议：使用高熵随机值，妥善保管。 |
+
+##### S3 配置
+
+| 变量名 | 说明 | 示例 |
+|--------|------|------|
+| `HOST_STYLE` | S3 虚拟主机风格访问的基础域名。若配置，则支持 `bucket.domain` 格式访问。 | `s3.example.com` |
+
+##### 可观测性（内部调试）
+
+| 变量名 | 说明 | 默认值 / 示例 |
+|--------|------|-------------|
+| `PYRO_URL` | Pyroscope 性能分析服务器地址（为空则不启用） | `https://pyroscope.example.com` |
+| `PYRO_AUTH_USER` | Pyroscope Basic Auth 用户名 | `wanos` |
+| `PYRO_AUTH_PASS` | Pyroscope Basic Auth 密码 | |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | OpenTelemetry OTLP 上报地址（为空则不启用） | `https://otel.example.com` |
 
 示例（仅示例，请按需修改）：
 
@@ -57,39 +72,41 @@ AKSK_SECRET_KEY=BASE64_OF_32_BYTES
 # OIDC_REDIRECT_URL=http://localhost:9001/api/v1/auth/oidc/callback
 # OIDC_SCOPES=openid profile email
 ```
+
 生成 AKSK_SECRET_KEY 示例
- 
- ```bash
- # 生成 32 字节并输出为 Base64（推荐）
- openssl rand -base64 32
- 
- # 或使用 Python 生成 URL-safe Base64
- python - <<'PY'
- import secrets, base64
- print(base64.urlsafe_b64encode(secrets.token_bytes(32)).decode())
- PY
- ```
- 
- 提示
- - Docker Compose 会自动读取与 `docker-compose.yml` 同目录下的 `.env`。
- - 若使用 `.env.local`，通过命令行指定：`docker compose --env-file .env.local up -d`。
- ## 启动服务
- 
- 在项目根目录执行：
- 
- ```bash
- docker compose up -d
- ```
- - 后端端口：`9000`（S3 API）、`9001`（管理 API）
- - 前端端口：`3000`
- - 数据目录映射：`./data:/data`
- 
- ## 下一步
 
- - 打开管理后台：`http://localhost:3000`，使用管理员账号登录
- - 参考“使用”文档了解：存储管理（含一键迁移）、Bucket 管理、节点与设置等
+```bash
+# 生成 32 字节并输出为 Base64（推荐）
+openssl rand -base64 32
 
-## 反向代理与 SSL（生产部署）
+# 或使用 Python 生成 URL-safe Base64
+python - <<'PY'
+import secrets, base64
+print(base64.urlsafe_b64encode(secrets.token_bytes(32)).decode())
+PY
+```
+
+提示
+- Docker Compose 会自动读取与 `docker-compose.yml` 同目录下的 `.env`。
+- 若使用 `.env.local`，通过命令行指定：`docker compose --env-file .env.local up -d`。
+
+### 启动服务
+
+在项目根目录执行：
+
+```bash
+docker compose up -d
+```
+- 后端端口：`9000`（S3 API）、`9001`（管理 API）
+- 前端端口：`3000`
+- 数据目录映射：`./data:/data`
+
+### 下一步
+
+- 打开管理后台：`http://localhost:3000`，使用管理员账号登录
+- 参考“使用”文档了解：存储管理（含一键迁移）、Bucket 管理、节点与设置等
+
+### 反向代理与 SSL（生产部署）
 
 - 本项目不内置 SSL/TLS 配置，生产环境请使用 Nginx/Caddy/Traefik 等在边缘配置 TLS。
 - 反向代理需保留 Host 与常见 X-Forwarded-* 头部。
@@ -161,3 +178,4 @@ server {
     proxy_send_timeout 300s;
   }
 }
+```

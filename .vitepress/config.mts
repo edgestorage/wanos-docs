@@ -26,7 +26,7 @@ export default withMermaid(defineConfig({
       { text: '首页', link: '/' },
       { text: '简介', link: '/concepts/intro' },
       { text: '能力与适用场景', link: '/concepts/capabilities' },
-      { text: '快速安装', link: '/manual/install' },
+      { text: '安装', link: '/manual/quick-start' },
     ],
 
     sidebar: [
@@ -42,8 +42,9 @@ export default withMermaid(defineConfig({
       {
         text: '部署与使用',
         items: [
+          { text: '快速安装', link: '/manual/quick-start' },
           {
-            text: '快速安装',
+            text: '手动安装',
             link: '/manual/install',
             collapsed: false,
             items: [
