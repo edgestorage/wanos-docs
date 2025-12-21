@@ -50,8 +50,8 @@ curl -fsSL https://raw.githubusercontent.com/edgestorage/wanos/main/install.sh |
 
 ```text
 Success! WANOS is running.
-Frontend: http://<YOUR_IP>:3000
-Backend:  http://<YOUR_IP>:9001 (Internal) / Same host as frontend
+Console:  http://<YOUR_IP>:3000
+Backend:  http://<YOUR_IP>:9001 (Internal) / Same host as console
 ```
 
 ### 访问管理后台
